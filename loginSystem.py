@@ -1,37 +1,44 @@
-# simple login system with dictionary
+# Define constants for messages and choices
+USERNAME_MESSAGE = "Username: "
+PASSWORD_MESSAGE = "Password: "
+SECRET_MESSAGE = "Now enter your secret phrase for safekeeping: "
+LOGIN_CHOICE = "1) Login"
+REGISTER_CHOICE = "2) Register"
+EXIT_CHOICE = "3) Exit"
 
+# Initialize an empty dictionary as the database
 database = {}
-constantMessage1 = 'Username  '#i wanted to use a constant but had no idea what to do
-#checks if username is in dattabase
-def checkingCaseOfUserNameInDataBase(x):
-    return x in database.keys()
-#for login
-def fun1():
-    x = input(constantMessage1)
-    if not checkingCaseOfUserNameInDataBase(x):
-        return 0
-    y = input("Password: ")
-    if y == database[x]["password"]:
-        return x
+
+# Define a function to check if a username exists in the database
+def username_exists(username):
+    return username in database
+
+# Define a function to handle user login
+def login():
+    username = input(USERNAME_MESSAGE)
+    if not username_exists(username):
+        return 0 # Username not found
+    password = input(PASSWORD_MESSAGE)
+    if password == database[username]["password"]:
+        return username # Login successful
     else:
-        return -1
-#for register
-def fun2():
-    x = input(constantMessage1)
-    if checkingCaseOfUserNameInDataBase(x):
-        return -1
-    y = input("New Password: ")
-    z = input("Now enter your secrete phrase for safekeeping: ")
-    database[x] = {"password": y, "secret": z}
-    return 1
-def printingOutAllChoicesAndReturnUserChoice():
-    print("\nWhat would you like to do?")
-    print("1) ")
-    print("2) ")
-    print("3) Exit\n")
-    v = int(input("> "))
-    print("")
-    return v
+        return -1 # Incorrect password
+
+# Define a function to handle user registration
+def register():
+    username = input(USERNAME_MESSAGE)
+    if username_exists(username):
+        return -1 # Username already exists
+    password = input(PASSWORD_MESSAGE)
+    secret = input(SECRET_MESSAGE)
+    database[username] = {"password": password, "secret": secret}
+    return 1 # Registration successful
+
+
+
+
+
+
 while True: #loop runs forever till break
     c = printingOutAllChoicesAndReturnUserChoice()
     match c:
